@@ -1,0 +1,19 @@
+# 默认配置文件
+
+app_name = "hook_wallet_api"
+
+[server]
+host = "127.0.0.1"
+port = 3000
+
+[tracing]
+level = "debug"
+with_target = true
+with_thread_ids = false
+with_thread_names = false
+with_file = true
+with_line_number = true
+pretty = false
+json = false
+with_ansi = true
+# filter = "hook_wallet=debug,actix_web=info"

@@ -1,0 +1,20 @@
+[workspace.package]
+version = "1.0.0"
+edition = "2024"
+license = "MIT"
+
+[workspace]
+resolver = "2"
+members = ["apps/api", "crates/core_tracing", "crates/settings"]
+
+
+[workspace.dependencies]
+actix-web = "4"
+tokio = { version = "1.48.0", features = ["full"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+config = "0.15.18"
+serde = { version = "1.0.228", features = ["derive"] }
+strum = { version = "0.27.2", features = ["derive"] }
+lazy_static = "1.5.0"
+sysinfo = "0.37.2"

@@ -1,0 +1,16 @@
+[package]
+name = "api"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+actix-web = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+core_tracing = { path = "../../crates/core_tracing" }
+settings = { path = "../../crates/settings" }
+strum = { workspace = true }
+serde = {workspace = true}
+lazy_static = {workspace = true}
+sysinfo = {workspace = true}

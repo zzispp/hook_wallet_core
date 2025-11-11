@@ -1,0 +1,10 @@
+[package]
+name = "core_tracing"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+settings = { path = "../settings" }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
