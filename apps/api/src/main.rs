@@ -1,5 +1,5 @@
 use actix_web::dev::Server;
-use actix_web::{App, HttpServer};
+use actix_web::{web, App, HttpServer};
 use core_tracing::CoreTracing;
 use settings::Settings;
 use std::io::Result;
@@ -33,7 +33,7 @@ async fn main() -> Result<()> {
 }
 
 async fn actix_web_run(settings: &Settings) -> Result<Server> {
-    Ok(HttpServer::new(move || App::new().service(server_status))
+    Ok(HttpServer::new(move || App::new().service(web::scope("/api").service(web::scope("/system").service(server_status))))
         .bind((settings.server.host.clone(), settings.server.port))?
         .run())
 }

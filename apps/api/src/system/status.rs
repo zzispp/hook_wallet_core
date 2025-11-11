@@ -1,6 +1,5 @@
 use actix_web::{get, web::Json};
 use serde::Serialize;
-use tracing::instrument;
 use std::time::{SystemTime, Instant};
 use sysinfo::System;
 
