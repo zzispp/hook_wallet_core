@@ -5,7 +5,7 @@ license = "MIT"
 
 [workspace]
 resolver = "2"
-members = ["apps/api", "crates/core_client", "crates/core_tracing", "crates/settings"]
+members = ["apps/api", "crates/core_client", "crates/core_jsonrpc", "crates/core_tracing", "crates/primitives", "crates/settings"]
 
 
 [workspace.dependencies]

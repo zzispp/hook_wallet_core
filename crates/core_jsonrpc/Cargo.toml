@@ -1,0 +1,23 @@
+[package]
+name = "core_jsonrpc"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+core_client = { path = "../core_client", optional = true }
+primitives = { path = "../primitives", optional = true }
+reqwest = { workspace = true, optional = true }
+async-trait = { workspace = true, optional = true }
+hex = { workspace = true, optional = true }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
+
+[features]
+default = []
+client = ["dep:core_client", "dep:async-trait", "dep:hex", "dep:primitives"]
+reqwest = ["client", "dep:reqwest", "core_client/reqwest"]
