@@ -5,7 +5,7 @@ license = "MIT"
 
 [workspace]
 resolver = "2"
-members = ["apps/api", "crates/core_tracing", "crates/settings"]
+members = ["apps/api", "crates/core_client", "crates/core_tracing", "crates/settings"]
 
 
 [workspace.dependencies]
@@ -18,3 +18,14 @@ serde = { version = "1.0.228", features = ["derive"] }
 strum = { version = "0.27.2", features = ["derive"] }
 lazy_static = "1.5.0"
 sysinfo = "0.37.2"
+async-trait = { version = "0.1.89" }
+serde_json = { version = "1.0.145", features = ["preserve_order"] }
+serde_urlencoded = { version = "0.7.1" }
+reqwest = { version = "0.12.23", features = [
+    "json",
+    "gzip",
+    "brotli",
+    "deflate",
+    "http2",
+] }
+hex = { version = "0.4.3" }
