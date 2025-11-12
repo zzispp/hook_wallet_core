@@ -12,7 +12,8 @@ members = ["apps/api", "crates/core_chain_traits",
     "crates/serde_serializers",
     "crates/settings_chain",
     "crates/core_solana",
-    "crates/settings"]
+    "crates/core_bsc",
+    "crates/settings", "crates/core_evm"]
 
 
 [workspace.dependencies]
@@ -42,3 +43,8 @@ num-traits = { version = "0.2.19" }
 futures = { version = "0.3.31" }
 typeshare = { version = "1.0.4" }
 url = { version = "2.5.7" }
+alloy-primitives = "1.4.1"
+alloy-sol-types = { version = "1.4.1", features = ["eip712-serde"] }
+alloy-dyn-abi = { version = "1.4.1", features = ["eip712"] }
+alloy-json-abi = { version = "1.4.1" }
+chrono = { version = "0.4.42", features = ["serde"] }

@@ -12,3 +12,4 @@ settings = { path = "../settings" }
 core_client = { path = "../core_client" }
 core_jsonrpc = { path = "../core_jsonrpc" }
 core_solana = { path = "../core_solana" }
+core_evm = { path = "../core_evm" }

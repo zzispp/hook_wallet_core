@@ -6,10 +6,12 @@ pub use provider_config::ProviderConfig;
 pub use settings::ChainURLType;
 
 use core_chain_traits::ChainTraits;
+use core_evm::rpc::ankr::AnkrClient;
+use core_evm::rpc::EthereumClient;
 use core_jsonrpc::JsonRpcClient;
 use core_solana::rpc::client::SolanaClient;
 
-use primitives::{Chain, NodeType};
+use primitives::{Chain, EVMChain, NodeType};
 use settings::Settings;
 
 pub struct ProviderFactory {}
@@ -72,7 +74,7 @@ impl ProviderFactory {
 
         let chain = config.chain;
         let url = config.url.clone();
-        let _node_type = config.clone().node_type;
+        let node_type = config.clone().node_type;
         let gem_client = ReqwestClient::new_with_user_agent(
             url.clone(),
             reqwest_client.clone(),
@@ -82,8 +84,7 @@ impl ProviderFactory {
         match chain {
             Chain::Solana => Box::new(SolanaClient::new(JsonRpcClient::new(gem_client.clone()))),
             Chain::Ethereum | Chain::SmartChain | Chain::Polygon | Chain::Arbitrum => {
-                //todo 添加evm支持
-                /*let chain = EVMChain::from_chain(chain).unwrap();
+                let chain = EVMChain::from_chain(chain).unwrap();
                 let client = gem_client.clone();
                 let rpc_client = JsonRpcClient::new(client.clone());
                 let ethereum_client = EthereumClient::new(rpc_client.clone(), chain)
@@ -92,8 +93,7 @@ impl ProviderFactory {
                         JsonRpcClient::new(ReqwestClient::new(config.clone().ankr_url(), reqwest_client.clone())),
                         chain,
                     ));
-                Box::new(ethereum_client)*/
-                Box::new(SolanaClient::new(JsonRpcClient::new(gem_client.clone())))
+                Box::new(ethereum_client)
             }
         }
     }

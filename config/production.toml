@@ -38,7 +38,7 @@ url = "https://arb1.arbitrum.io/rpc"
 
 [ankr]
 [ankr.key]
-secret = ""
+secret = "8ce1b2802b07e321a9e41e6ddfda192ed7437fe75ea0238dd9231eb8513f03f5"
 
 [trongrid]
 [trongrid.key]

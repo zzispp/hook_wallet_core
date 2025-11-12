@@ -1,10 +1,12 @@
 //! 区块链网络枚举和实现
 //!
 //! 定义了支持的区块链网络类型及其相关属性（网络 ID、区块时间等）。
-
+use crate::{AssetId, StakeChain};
 use serde::{Deserialize, Serialize};
-use std::fmt;
+use std::{fmt, str::FromStr};
+use strum::IntoEnumIterator;
 use strum::{AsRefStr, EnumIter, EnumString};
+use typeshare::typeshare;
 
 /// 支持的区块链网络枚举
 ///
@@ -13,21 +15,8 @@ use strum::{AsRefStr, EnumIter, EnumString};
 /// - SmartChain (BSC) - 币安智能链
 /// - Arbitrum (ARB) - Arbitrum One
 /// - Polygon (MATIC) - Polygon 主网
-#[derive(
-    Copy,
-    Clone,
-    Debug,
-    Serialize,
-    Deserialize,
-    EnumIter,
-    AsRefStr,
-    EnumString,
-    PartialEq,
-    Ord,
-    PartialOrd,
-    Eq,
-    Hash,
-)]
+#[derive(Copy, Clone, Debug, Serialize, Deserialize, EnumIter, AsRefStr, EnumString, PartialEq, Ord, PartialOrd, Eq, Hash)]
+#[typeshare(swift = "Equatable, CaseIterable, Sendable, Hashable")]
 #[serde(rename_all = "lowercase")]
 #[strum(serialize_all = "lowercase")]
 pub enum Chain {
@@ -50,6 +39,22 @@ impl fmt::Display for Chain {
 }
 
 impl Chain {
+    pub fn as_asset_id(&self) -> AssetId {
+        AssetId::from_chain(*self)
+    }
+
+    pub fn is_swap_supported(&self) -> bool {
+        match self {
+            Self::Ethereum | Self::SmartChain | Self::Arbitrum | Self::Polygon | Self::Solana => {
+                true
+            }
+        }
+    }
+
+    pub fn is_stake_supported(&self) -> bool {
+        StakeChain::from_str(self.as_ref()).is_ok()
+    }
+
     /// 获取链的网络 ID (Chain ID)
     ///
     /// # 返回值
@@ -174,10 +179,7 @@ impl Chain {
     /// assert_eq!(chains.len(), 4);
     /// ```
     pub fn all() -> Vec<Self> {
-        //todo 临时只支持 Solana，其他链等 EVM 实现后再添加
-        vec![Self::Solana]
-        // use strum::IntoEnumIterator;
-        // Self::iter().collect::<Vec<_>>()
+        Self::iter().collect::<Vec<_>>()
     }
 
     /// 是否为 EVM 兼容链

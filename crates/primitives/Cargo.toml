@@ -11,5 +11,6 @@ typeshare = { workspace = true }
 num-bigint = { workspace = true }
 serde_json = {workspace = true}
 serde_serializers = { path = "../serde_serializers" }
+chrono = {workspace = true}
 [dev-dependencies]
 serde_json = { workspace = true }

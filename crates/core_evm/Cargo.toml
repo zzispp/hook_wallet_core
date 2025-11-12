@@ -1,0 +1,25 @@
+[package]
+name = "core_evm"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+core_jsonrpc = { path = "../core_jsonrpc" }
+core_client = { path = "../core_client" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+hex = { workspace = true }
+alloy-primitives = { workspace = true }
+alloy-sol-types = { workspace = true, features = ["eip712-serde"] }
+alloy-dyn-abi = { workspace = true, features = ["eip712"] }
+alloy-json-abi = { workspace = true }
+num-bigint = { workspace = true }
+serde_serializers = { path = "../serde_serializers" }
+primitives = { path = "../primitives" }
+core_chain_traits = { path = "../core_chain_traits" }
+async-trait = { workspace = true }
+num-traits = { workspace = true }
+core_bsc = { path = "../core_bsc" }
+chrono = { workspace = true }
+reqwest = { workspace = true, features = ["json"] }
