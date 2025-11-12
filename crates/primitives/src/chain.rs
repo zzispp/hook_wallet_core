@@ -39,6 +39,8 @@ pub enum Chain {
     Arbitrum,
     /// Polygon 主网 (Chain ID: 137)
     Polygon,
+    /// Solana 主网
+    Solana,
 }
 
 impl fmt::Display for Chain {
@@ -68,6 +70,7 @@ impl Chain {
             Self::SmartChain => "56",
             Self::Arbitrum => "42161",
             Self::Polygon => "137",
+            Self::Solana => "5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d",
         }
     }
 
@@ -112,6 +115,7 @@ impl Chain {
     pub fn as_slip44(&self) -> i64 {
         match self {
             Self::Ethereum | Self::Arbitrum | Self::SmartChain | Self::Polygon => 60,
+            Self::Solana => 501,
         }
     }
 
@@ -129,10 +133,10 @@ impl Chain {
     /// ```
     pub fn block_time(&self) -> u32 {
         match self {
-            Self::SmartChain => 3_000,         // 3 秒
-            Self::Arbitrum => 250,             // 0.25 秒
-            Self::Polygon => 2_000,            // 2 秒
-            Self::Ethereum => 12_000,          // 12 秒
+            Self::SmartChain | Self::Arbitrum => 1_000, // 1 秒
+            Self::Polygon => 3_000,                     // 3 秒
+            Self::Ethereum => 12_000,                   // 12 秒
+            Self::Solana => 500,
         }
     }
 
@@ -151,10 +155,9 @@ impl Chain {
     /// ```
     pub fn rank(&self) -> i32 {
         match self {
-            Self::Ethereum => 100,    // 最高优先级
-            Self::SmartChain => 80,   // 高优先级
-            Self::Arbitrum => 70,     // 中高优先级
-            Self::Polygon => 70,      // 中高优先级
+            Self::Ethereum => 80, // 最高优先级
+            Self::Solana | Self::SmartChain => 70,
+            Self::Arbitrum | Self::Polygon => 30, // 中高优先级
         }
     }
 
@@ -171,8 +174,10 @@ impl Chain {
     /// assert_eq!(chains.len(), 4);
     /// ```
     pub fn all() -> Vec<Self> {
-        use strum::IntoEnumIterator;
-        Self::iter().collect::<Vec<_>>()
+        //todo 临时只支持 Solana，其他链等 EVM 实现后再添加
+        vec![Self::Solana]
+        // use strum::IntoEnumIterator;
+        // Self::iter().collect::<Vec<_>>()
     }
 
     /// 是否为 EVM 兼容链
@@ -189,7 +194,10 @@ impl Chain {
     /// ```
     pub fn is_evm(&self) -> bool {
         // 当前所有支持的链都是 EVM 兼容的
-        true
+        match self {
+            Self::Ethereum | Self::SmartChain | Self::Arbitrum | Self::Polygon => true,
+            Self::Solana => false,
+        }
     }
 }
 
@@ -286,7 +294,12 @@ mod tests {
 
     #[test]
     fn test_chain_ordering() {
-        let mut chains = vec![Chain::Polygon, Chain::Ethereum, Chain::Arbitrum, Chain::SmartChain];
+        let mut chains = vec![
+            Chain::Polygon,
+            Chain::Ethereum,
+            Chain::Arbitrum,
+            Chain::SmartChain,
+        ];
         chains.sort();
 
         // 验证排序后的顺序（按枚举定义顺序）

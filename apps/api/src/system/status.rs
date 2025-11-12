@@ -1,6 +1,7 @@
-use actix_web::{get, web::Json};
+use rocket::get;
+use rocket::serde::json::Json;
 use serde::Serialize;
-use std::time::{SystemTime, Instant};
+use std::time::{Instant, SystemTime};
 use sysinfo::System;
 
 #[derive(Serialize)]
@@ -12,7 +13,7 @@ struct ServerStatus {
     memory: MemoryInfo,
 }
 
-#[derive(Serialize,Clone)]
+#[derive(Serialize, Clone)]
 struct OsInfo {
     name: String,
     version: String,
@@ -42,8 +43,8 @@ lazy_static::lazy_static! {
     };
 }
 
-#[get("/")]
-pub async fn server_status() -> Json<ServerStatus> {
+#[get("/status")]
+pub async fn get_status() -> Json<ServerStatus> {
     let now = SystemTime::now();
     let timestamp = now
         .duration_since(SystemTime::UNIX_EPOCH)
@@ -52,14 +53,11 @@ pub async fn server_status() -> Json<ServerStatus> {
 
     let uptime = START_TIME.elapsed().as_secs();
 
-    // 获取系统信息
     let mut sys = System::new_all();
 
-    // 刷新CPU信息以获取使用率
     tokio::time::sleep(std::time::Duration::from_millis(200)).await;
     sys.refresh_cpu_all();
 
-    // CPU信息
     let cpu_count = sys.cpus().len();
     let cpu_usage = sys.global_cpu_usage();
 
@@ -68,7 +66,6 @@ pub async fn server_status() -> Json<ServerStatus> {
         cpu_usage,
     };
 
-    // 内存信息
     let total_memory = sys.total_memory();
     let used_memory = sys.used_memory();
     let available_memory = sys.available_memory();
@@ -92,4 +89,9 @@ pub async fn server_status() -> Json<ServerStatus> {
         cpu: cpu_info,
         memory: memory_info,
     })
+}
+
+#[get("/health")]
+pub fn get_health() -> &'static str {
+    "OK"
 }

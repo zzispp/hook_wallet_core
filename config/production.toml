@@ -16,3 +16,30 @@ with_line_number = false
 pretty = false
 json = true
 with_ansi = false
+
+
+[chains]
+[chains.solana]
+url = "https://solana-rpc.publicnode.com"
+
+[chains.ethereum]
+url = "https://eth-pokt.nodies.app"
+node = "Archival"
+
+[chains.smartchain]
+url = "https://bsc-dataseed1.bnbchain.org"
+
+[chains.polygon]
+url = "https://polygon.llamarpc.com"
+
+[chains.arbitrum]
+url = "https://arb1.arbitrum.io/rpc"
+
+
+[ankr]
+[ankr.key]
+secret = ""
+
+[trongrid]
+[trongrid.key]
+secret = ""

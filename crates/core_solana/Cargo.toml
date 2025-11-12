@@ -1,0 +1,21 @@
+[package]
+name = "core_solana"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+
+[dependencies]
+core_jsonrpc = { path = "../core_jsonrpc" }
+async-trait = { workspace = true, optional = true }
+core_client = { path = "../core_client", optional = true }
+serde_json = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+primitives = { path = "../primitives" }
+core_chain_traits = { path = "../core_chain_traits" }
+num-bigint = { workspace = true }
+serde_serializers = { path = "../serde_serializers" }
+
+[features]
+default = ["provider"]
+provider = ["async-trait", "core_client", "core_jsonrpc/client"]

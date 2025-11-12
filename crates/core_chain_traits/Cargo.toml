@@ -1,0 +1,10 @@
+[package]
+name = "core_chain_traits"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+primitives = { path = "../primitives" }
+async-trait = { workspace = true }
+futures = { workspace = true }

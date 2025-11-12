@@ -2,6 +2,35 @@ use config::{Config, ConfigError, Environment, File};
 use serde::Deserialize;
 use tracing::Level;
 
+
+
+
+#[derive(Debug, Deserialize, Clone,Default)]
+#[allow(unused)]
+pub struct Chains {
+    pub solana: Chain,
+    pub ethereum: Chain,
+    pub smartchain: Chain,
+    pub polygon: Chain,
+    pub arbitrum: Chain,
+}
+
+#[derive(Debug, Deserialize, Clone,Default)]
+#[allow(unused)]
+pub struct Chain {
+    pub url: String,
+    #[serde(default)]
+    pub node: ChainURLType,
+}
+
+#[derive(Debug, Deserialize, Clone, Default)]
+pub enum ChainURLType {
+    #[default]
+    Default,
+    Archival,
+}
+
+
 /// 应用配置
 #[derive(Debug, Clone, Deserialize)]
 pub struct Settings {
@@ -16,7 +45,32 @@ pub struct Settings {
     /// Tracing 配置
     #[serde(default)]
     pub tracing: TracingConfig,
+
+    pub chains: Chains,
+
+
+    pub ankr: Ankr,
+    pub trongrid: Trongrid,
 }
+
+#[derive(Debug, Deserialize, Clone, Default)]
+#[allow(unused)]
+pub struct Ankr {
+    pub key: KeySecret,
+}
+
+#[derive(Debug, Deserialize, Clone, Default)]
+#[allow(unused)]
+pub struct Trongrid {
+    pub key: KeySecret,
+}
+
+#[derive(Debug, Deserialize, Clone, Default)]
+#[allow(unused)]
+pub struct KeySecret {
+    pub secret: String,
+}
+
 
 fn default_app_name() -> String {
     "app".to_string()
@@ -178,6 +232,9 @@ impl Settings {
                 with_thread_names: true,
                 ..Default::default()
             },
+            chains: Default::default(),
+            ankr: Ankr::default(),
+            trongrid: Trongrid::default(),
         }
     }
 
@@ -194,6 +251,12 @@ impl Settings {
                 with_line_number: false,
                 ..Default::default()
             },
+            chains: Default::default(),
+            ankr: Ankr::default(),
+            trongrid: Trongrid::default(),
         }
     }
 }
+
+
+

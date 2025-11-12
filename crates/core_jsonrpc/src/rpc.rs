@@ -430,6 +430,7 @@ mod integration_tests {
                 Chain::SmartChain => Ok("https://bsc-dataseed.binance.org".to_string()),
                 Chain::Arbitrum => Ok("https://arb1.arbitrum.io/rpc".to_string()),
                 Chain::Polygon => Ok("https://polygon-rpc.com".to_string()),
+                Chain::Solana=> Ok("https://solana-rpc.publicnode.com".to_string())
             }
         }
     }

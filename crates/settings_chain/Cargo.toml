@@ -1,0 +1,14 @@
+[package]
+name = "settings_chain"
+version = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+url = { workspace = true }
+tracing = {workspace = true}
+primitives = { path = "../primitives" }
+core_chain_traits = { path = "../core_chain_traits" }
+settings = { path = "../settings" }
+core_client = { path = "../core_client" }
+core_jsonrpc = { path = "../core_jsonrpc" }
+core_solana = { path = "../core_solana" }
